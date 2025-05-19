@@ -1,4 +1,3 @@
-const { GoatWrapper } = require("fca-liane-utils");
 const os = require('os');
 const { bold } = require("fontstyles");
 
@@ -114,5 +113,3 @@ module.exports = {
     }
   }
 };
-const wrapper = new GoatWrapper(module.exports);
-wrapper.applyNoPrefix({ allowPrefix: true });
