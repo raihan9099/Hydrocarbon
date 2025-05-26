@@ -1,12 +1,9 @@
 [
     {
         "key": "dbln",
-        "value": "%7B%2261574040341397%22%3A%22VGN47vrN%22%2C%2261574056063467%22%3A%22Tw9NStX4%22%2C%2261574415482328%22%3A%22Egcu3iwH%22%2C%22100031145441301%22%3A%22UtQUX9zG%22%2C%2261574614367258%22%3A%22gJpWUvia%22%2C%2261575107765842%22%3A%225lKWk4nc%22%2C%2261575724015455%22%3A%22N7IqCngE%22%2C%2261575579312989%22%3A%22ANACX8Xg%22%2C%2261552422054139%22%3A%22sMLe2nyq%22%7D",
-        "domain": "facebook.com",
+        "value": .com",
         "path": "/login/device-based/",
-        "hostOnly": false,
-        "creation": "2025-05-26T06:03:03.314Z",
-        "lastAccessed": "2025-05-26T06:03:03.315Z"
+        "
     },
     {
         "key": "datr",
