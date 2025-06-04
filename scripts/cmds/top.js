@@ -1,43 +1,46 @@
-module.exports = {
+cmd install top.js module.exports = {
   config: {
-    name: "richest",
-    aliases: ["top"],
-    version: "1.0",
-    author: "Aryan Chauhan",
-    countDown: 5,
-    shortDescription: { en: "Show top richest users" },
+    name: "top",
+    version: "1.4",
+    author: "FAHAD",
+    role: 0,
+    shortDescription: {
+      en: "Top 15 Rich Users"
+    },
     longDescription: {
-      en: "Displays a leaderboard of users with the highest money balance.",
+      en: ""
     },
     category: "GAME",
+    guide: {
+      en: "{pn}"
+    }
   },
-
-  langs: {
-    en: {
-      title: "💸 Top Richest Users 💸",
-      no_data: "No users found with money data.",
-      list: "%1. %2 - $%3",
-    },
-  },
-
-  onStart: async function ({ usersData, message, getLang }) {
+  onStart: async function ({ api, args, message, event, usersData }) {
     const allUsers = await usersData.getAll();
+    
+    // Sort users by money and take top 15
+    const topUsers = allUsers.sort((a, b) => b.money - a.money).slice(0, 15);
 
-    const usersWithMoney = allUsers
-      .filter(user => user.money && user.money > 0)
-      .sort((a, b) => b.money - a.money)
-      .slice(0, 10);
-
-    if (usersWithMoney.length === 0) {
-      return message.reply(getLang("no_data"));
+    // Function to format numbers correctly
+    function formatNumber(num) {
+      if (num >= 1e15) return (num / 1e15).toFixed(2) + "Q$"; // Quadrillion
+      if (num >= 1e12) return (num / 1e12).toFixed(2) + "T$"; // Trillion
+      if (num >= 1e9) return (num / 1e9).toFixed(2) + "𝐁$"; // Billion
+      if (num >= 1e6) return (num / 1e6).toFixed(2) + "𝐌$"; // Million
+      if (num >= 1e3) return (num / 1e3).toFixed(2) + "𝐊$"; // Thousand
+      return num.toString(); // যদি 1K-এর নিচে হয়, তাহলে নরমাল দেখাবে
     }
 
-    let msg = `\n${getLang("title")}\n\n`;
-    usersWithMoney.forEach((user, index) => {
-      const userName = user.name || `User ${index + 1}`;
-      msg += getLang("list", index + 1, userName, user.money) + "\n";
+    // Create leaderboard list
+    const topUsersList = topUsers.map((user, index) => {
+      const moneyFormatted = formatNumber(user.money || 0); // যদি টাকা না থাকে তাহলে "0" দেখাবে
+      const medals = ["🥇", "🥈", "🥉"];
+      return `${medals[index] || `${index + 1}.`} ${user.name}⇛ ${moneyFormatted}`;
     });
 
-    return message.reply(msg.trim());
-  },
+    // Shortened header and compact design
+    const messageText = `👑 𝗧𝗢𝗣 𝗥𝗜𝗖𝗛𝗘𝗦𝗧 𝗨𝗦𝗘𝗥𝗦 👑\n━━━━━━━━━━━\n${topUsersList.join("\n")}`;
+
+    message.reply(messageText);
+  }
 };
